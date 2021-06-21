@@ -28,6 +28,7 @@
 					"/pages/",
 					"/components/",
 					"/assets/",
+					"/services/",
 					"/types/",
 					"/styles/",
 					["parent", "sibling", "index"]
