@@ -6,4 +6,4 @@ export const COLORS = {
 	black1000: "#000000",
 	gray250: "#b7b7b7",
 	gray500: "#33363a",
-}
+};

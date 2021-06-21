@@ -4,7 +4,9 @@
 	"plugins": ["import-helpers"],
 	"extends": [
 		"@techmmunity/eslint-config/common",
-		"@techmmunity/eslint-config/typescript"
+		"@techmmunity/eslint-config/react",
+		"@techmmunity/eslint-config/typescript",
+		"@techmmunity/eslint-config/ts-react"
 	],
 	"parserOptions": {
 		"ecmaFeatures": {
