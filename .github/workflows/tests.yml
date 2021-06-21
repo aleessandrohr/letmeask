@@ -1,0 +1,31 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          yarn
+
+      - name: Run ESLint
+        run: |
+          yarn eslint .
+
+      - name: Test TypeScript Syntax
+        run: |
+          yarn tsc
+
+      - name: Build
+        run: |
+          yarn build
