@@ -1,0 +1,79 @@
+{
+	// Define Tab Size = 2 Spaces (Half of the Default Size)
+	"editor.tabSize": 2,
+
+	// Disable Tab To Space Conversion
+	"editor.insertSpaces": false,
+
+	// Make Prettier The Default Code Formatter
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+
+	// Config Default End Of Line Formatting
+	"files.eol": "\n",
+
+	// Enable Format On Save
+	"editor.formatOnSave": true,
+
+	// Make ESLint fix all the things that he can on save (like prettier formating)
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+
+	// Make VSCode understand this files as files of this languages
+	"files.associations": {
+		".env.test": "env"
+	},
+
+	// ================ Languages General Config ====================
+
+	// TypeScript
+	"typescript.suggest.autoImports": true,
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"typescript.tsserver.log": "verbose",
+	"[typescript]": {
+		"editor.defaultFormatter": null
+	},
+
+	// TypeScript With React
+	"[typescriptreact]": {
+		"editor.defaultFormatter": null
+	},
+
+	// JavaScript
+	"javascript.suggest.autoImports": true,
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"[javascript]": {
+		"editor.defaultFormatter": null
+	},
+
+	// JavaScript With React
+	"[javascriptreact]": {
+		"editor.defaultFormatter": null
+	},
+
+	// =========== Plugins & Extensions General Config ===============
+
+	// GitLens
+	"gitlens.codeLens.authors.enabled": true,
+	"gitlens.codeLens.enabled": false,
+	"gitlens.codeLens.recentChange.enabled": false,
+
+	// Eslint
+	"eslint.packageManager": "yarn",
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact"
+	],
+
+	// Material Icon Theme
+	"material-icon-theme.folders.associations": {
+		"types": "typescript",
+		"enums": "typescript",
+		"interfaces": "typescript"
+	},
+
+	// Code Spell Checker
+	"cSpell.words": ["Helvetica", "Letmeask", "Roboto", "browserslist"]
+}
