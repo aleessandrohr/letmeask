@@ -75,5 +75,11 @@
 	},
 
 	// Code Spell Checker
-	"cSpell.words": ["Helvetica", "Letmeask", "Roboto", "browserslist"]
+	"cSpell.words": [
+		"Helvetica",
+		"Letmeask",
+		"Roboto",
+		"alessandroramos",
+		"browserslist"
+	]
 }
