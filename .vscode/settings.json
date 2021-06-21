@@ -21,7 +21,7 @@
 
 	// Make VSCode understand this files as files of this languages
 	"files.associations": {
-		".env.test": "env"
+		".env.*": "env"
 	},
 
 	// ================ Languages General Config ====================
