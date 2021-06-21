@@ -25,7 +25,3 @@ jobs:
       - name: Test TypeScript Syntax
         run: |
           yarn tsc
-
-      - name: Build
-        run: |
-          yarn build
