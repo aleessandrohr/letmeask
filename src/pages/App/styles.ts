@@ -25,13 +25,13 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     background: ${COLORS.background};
-    color: ${COLORS.black1000};
+    color: ${COLORS.primary};
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-size: 1.6rem;
   }
 
 	a {
-		color: ${COLORS.black1000};
+		color: ${COLORS.primary};
 		text-decoration: none;
 	}
 

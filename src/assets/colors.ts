@@ -1,9 +1,15 @@
 export const COLORS = {
-	primary: "#000000",
+	primary: "#29292e",
 	secondary: "#ffffff",
-	background: "#ffffff",
+	background: "#f8f8f8",
 	white1000: "#ffffff",
+	white900: "#f8f8f8",
 	black1000: "#000000",
+	gray200: "#a8a8b3",
 	gray250: "#b7b7b7",
+	gray300: "#737380",
 	gray500: "#33363a",
+	purple300: "#835afd",
+	pink500: "#e559f9",
+	red500: "#ea4335",
 };
