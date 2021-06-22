@@ -51,6 +51,11 @@
 		"editor.defaultFormatter": null
 	},
 
+	// XML
+	"[xml]": {
+		"editor.defaultFormatter": "DotJoshJohnson.xml"
+	},
+
 	// =========== Plugins & Extensions General Config ===============
 
 	// GitLens
@@ -81,6 +86,8 @@
 		"Roboto",
 		"alessandroramos",
 		"browserslist",
-		"sonarjs"
+		"preconnect",
+		"sonarjs",
+		"svgs"
 	]
 }

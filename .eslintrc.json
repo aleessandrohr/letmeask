@@ -27,6 +27,7 @@
 					"module",
 					"/pages/",
 					"/components/",
+					"/contexts/",
 					"/assets/",
 					"/services/",
 					"/types/",
