@@ -1,7 +1,7 @@
 {
 	"root": true,
 	"parser": "@typescript-eslint/parser",
-	"plugins": ["import-helpers"],
+	"plugins": ["import-helpers", "filenames"],
 	"extends": [
 		"@techmmunity/eslint-config/common",
 		"@techmmunity/eslint-config/react",
@@ -16,6 +16,14 @@
 		"project": "tsconfig.json",
 		"sourceType": "module"
 	},
+	"overrides": [
+		{
+			"files": ["src/hooks/**/*.ts"],
+			"rules": {
+				"filenames/match-regex": ["error", "^([a-z]+)(([A-Z]([a-z]+))+)$", true]
+			}
+		}
+	],
 	"rules": {
 		"import-helpers/order-imports": [
 			"warn",
@@ -27,6 +35,7 @@
 					"module",
 					"/pages/",
 					"/components/",
+					"/hooks/",
 					"/contexts/",
 					"/assets/",
 					"/services/",

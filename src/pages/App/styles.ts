@@ -9,8 +9,8 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
 
 		&:focus-visible {
-			outline: 3px solid transparent;
-		 	box-shadow: 0 0 0 3px ${COLORS.black1000};
+			outline: 2px solid transparent;
+		 	box-shadow: 0 0 0 2px ${COLORS.black1000};
 		}
   }
 

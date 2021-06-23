@@ -40,10 +40,23 @@ export const LogoIcon = styled.img`
 	align-self: center;
 `;
 
-export const CreateRoom = styled(Button)`
+export const CreateRoom = styled.button`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 5rem;
 	background: ${COLORS.red500};
+	color: ${COLORS.white1000};
+	font-weight: 500;
+	border-radius: 8px;
 	margin-top: 6.4rem;
-	padding: 0;
+	transition: filter 0.2s ease-out;
+	cursor: pointer;
+
+	&:hover,
+	&:focus {
+		filter: brightness(0.9);
+	}
 `;
 
 export const GoogleIcon = styled.img`
