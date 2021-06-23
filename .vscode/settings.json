@@ -86,8 +86,10 @@
 		"Roboto",
 		"alessandroramos",
 		"browserslist",
+		"multiline",
 		"preconnect",
 		"sonarjs",
-		"svgs"
+		"svgs",
+		"toastify"
 	]
 }
