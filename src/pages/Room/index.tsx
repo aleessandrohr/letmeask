@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
@@ -98,7 +98,9 @@ export const Room: React.FC = () => {
 		<Container>
 			<Description>
 				<Content>
-					<Img src={Logo} alt="Letmeask" />
+					<Link to="/">
+						<Img src={Logo} alt="Letmeask" />
+					</Link>
 					<RoomCode code={roomId} />
 				</Content>
 			</Description>
