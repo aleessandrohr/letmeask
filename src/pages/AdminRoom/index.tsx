@@ -1,4 +1,4 @@
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, Link } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 
 import { Question } from "components/Question";
@@ -62,7 +62,9 @@ export const AdminRoom: React.FC = () => {
 		<Container>
 			<Description>
 				<Content>
-					<Img src={Logo} alt="Letmeask" />
+					<Link to="/">
+						<Img src={Logo} alt="Letmeask" />
+					</Link>
 					<Row>
 						<RoomCode code={roomId} />
 						<CloseRoom isOutlined onClick={handleEndRoom}>
