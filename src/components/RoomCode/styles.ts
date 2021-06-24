@@ -7,7 +7,7 @@ export const Container = styled.button`
 	height: 4rem;
 	background: ${COLORS.white1000};
 	border-radius: 8px;
-	border: 1px solid ${COLORS.purple300};
+	border: 1px solid ${COLORS.primary};
 	overflow: hidden;
 	cursor: pointer;
 `;
@@ -17,7 +17,7 @@ export const ImgContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	height: 100%;
-	background: ${COLORS.purple300};
+	background: ${COLORS.primary};
 	padding: 0 1.2rem;
 `;
 

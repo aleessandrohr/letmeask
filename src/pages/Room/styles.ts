@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { COLORS } from "assets/colors";
+import { LikeComponent } from "assets/images/svgs";
 
 export const Container = styled.div``;
 
@@ -38,7 +39,7 @@ export const Title = styled.h1`
 	color: ${COLORS.gray600};
 `;
 
-export const Questions = styled.span`
+export const QuestionCounter = styled.span`
 	background: ${COLORS.pink500};
 	color: ${COLORS.white1000};
 	font-size: 1.4rem;
@@ -65,7 +66,7 @@ export const Textarea = styled.textarea`
 	}
 `;
 
-export const FormFooter = styled.div`
+export const Footer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -90,7 +91,7 @@ export const UserName = styled.span`
 	margin-left: 0.8rem;
 `;
 
-export const Question = styled.span`
+export const LoginContainer = styled.span`
 	color: ${COLORS.gray300};
 	font-size: 1.4rem;
 	font-weight: 500;
@@ -98,9 +99,45 @@ export const Question = styled.span`
 
 export const Login = styled.button`
 	background: transparent;
-	color: ${COLORS.purple300};
+	color: ${COLORS.primary};
 	font-size: 1.4rem;
 	font-weight: 500;
 	text-decoration: underline;
 	cursor: pointer;
 `;
+
+export const Questions = styled.div`
+	margin-top: 3.2rem;
+`;
+
+export const Loading = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	> span > span {
+		background: ${COLORS.primary};
+	}
+`;
+
+export const Like = styled.button<{ liked?: string }>`
+	display: flex;
+	align-items: flex-end;
+	background: transparent;
+	color: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
+	gap: 0.8rem;
+	transition: filter 0.2s ease-out;
+	cursor: pointer;
+
+	> svg > path {
+		stroke: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
+	}
+
+	&:hover {
+		filter: brightness(0.7);
+	}
+`;
+
+export const LikeCounter = styled.span``;
+
+export const LikeIcon = styled(LikeComponent)``;

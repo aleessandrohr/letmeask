@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
 import { Button } from "components/Button";
+import { Question } from "components/Question";
 import { RoomCode } from "components/RoomCode";
-import { Toast } from "components/Toast";
 
 import { useAuth } from "hooks/useAuth";
+import { useRoom } from "hooks/useRoom";
 
 import { Logo } from "assets/images/svgs";
 
@@ -21,15 +22,20 @@ import {
 	Main,
 	TitleContainer,
 	Title,
-	Questions,
+	QuestionCounter,
 	Form,
 	Textarea,
-	FormFooter,
+	Footer,
 	UserInfo,
 	UserImg,
 	UserName,
-	Question,
+	LoginContainer,
 	Login,
+	Questions,
+	Loading,
+	Like,
+	LikeCounter,
+	LikeIcon,
 } from "./styles";
 
 interface Params {
@@ -40,46 +46,19 @@ interface Data {
 	newQuestion: string;
 }
 
-type FirebaseQuestions = Record<
-	string,
-	{
-		author: {
-			name: string;
-			avatar: string;
-		};
-		content: string;
-		isAnswered: boolean;
-		isHighlighted: boolean;
-	}
->;
-
-interface IQuestion {
-	id: string;
-	author: {
-		name: string;
-		avatar: string;
-	};
-	content: string;
-	isAnswered: boolean;
-	isHighlighted: boolean;
-}
-
 export const Room: React.FC = () => {
-	const { user } = useAuth();
+	const { user, signInWithGoogle } = useAuth();
 	const { id: roomId } = useParams<Params>();
 	const { register, reset, handleSubmit } = useForm<Data>({
 		defaultValues: {
 			newQuestion: "",
 		},
 	});
-	const [title, setTitle] = useState("");
-	const [questions, setQuestions] = useState<Array<IQuestion>>([]);
+	const { title, questions } = useRoom(roomId);
 
 	const handleSendQuestion = handleSubmit(async ({ newQuestion }) => {
-		reset();
-
 		if (!user) {
-			toast.error("Você deve estar logado!");
+			toast.error("Você deve está logado!");
 
 			return;
 		}
@@ -96,34 +75,24 @@ export const Room: React.FC = () => {
 
 		try {
 			await database.ref(`rooms/${roomId}/questions`).push(question);
+			reset();
 			toast.success("Pergunta enviada!");
-		} catch {
-			toast.error("Erro ao enviar a pergunta!");
+		} catch (error) {
+			toast.error(error.message);
 		}
 	});
 
-	useEffect(() => {
-		const roomRef = database.ref(`rooms/${roomId}`);
-
-		roomRef.on("value", room => {
-			const databaseRoom = room.val();
-			const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
-			const parsedQuestions = Object.entries(firebaseQuestions).map(
-				([key, value]) => {
-					return {
-						id: key,
-						content: value.content,
-						author: value.author,
-						isHighlighted: value.isHighlighted,
-						isAnswered: value.isAnswered,
-					};
-				},
-			);
-
-			setTitle(databaseRoom.title);
-			setQuestions(parsedQuestions);
-		});
-	}, [roomId]);
+	const handleLikeQuestion = async (questionId: string, likeId?: string) => {
+		if (likeId) {
+			await database
+				.ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`)
+				.remove();
+		} else {
+			await database
+				.ref(`rooms/${roomId}/questions/${questionId}/likes`)
+				.push({ authorId: user?.id });
+		}
+	};
 
 	return (
 		<Container>
@@ -136,11 +105,9 @@ export const Room: React.FC = () => {
 			<Main>
 				<TitleContainer>
 					<Title>Sala {title}</Title>
-					{questions.length > 0 && (
-						<Questions>
-							{questions.length} pergunta{questions.length > 0 && "s"}
-						</Questions>
-					)}
+					<QuestionCounter>
+						{questions.length} pergunta{questions.length !== 1 && "s"}
+					</QuestionCounter>
 				</TitleContainer>
 				<Form onSubmit={handleSendQuestion}>
 					<Textarea
@@ -150,7 +117,7 @@ export const Room: React.FC = () => {
 							setValueAs: value => value.trim(),
 						})}
 					/>
-					<FormFooter>
+					<Footer>
 						{user && (
 							<UserInfo>
 								<UserImg src={user.avatar} alt={user.name} />
@@ -158,17 +125,37 @@ export const Room: React.FC = () => {
 							</UserInfo>
 						)}
 						{!user && (
-							<Question>
-								Para enviar uma pergunta, <Login>faça seu login</Login>
-							</Question>
+							<LoginContainer>
+								Para enviar uma pergunta,{" "}
+								<Login onClick={signInWithGoogle}>faça seu login</Login>
+							</LoginContainer>
 						)}
 						<Button type="submit" disabled={!user}>
 							Enviar pergunta
 						</Button>
-					</FormFooter>
+					</Footer>
 				</Form>
+				<Questions>
+					{!title && (
+						<Loading>
+							<ScaleLoader />
+						</Loading>
+					)}
+					{questions?.map(({ content, author, id, likeCount, likeId }) => (
+						<Question key={id} content={content} author={author}>
+							<Like
+								type="button"
+								aria-label="Marcar como gostei"
+								onClick={() => handleLikeQuestion(id, likeId)}
+								liked={likeId}
+							>
+								{likeCount > 0 && <LikeCounter>{likeCount}</LikeCounter>}
+								<LikeIcon />
+							</Like>
+						</Question>
+					))}
+				</Questions>
 			</Main>
-			<Toast />
 		</Container>
 	);
 };

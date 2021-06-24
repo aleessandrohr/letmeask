@@ -7,7 +7,7 @@ export const Container = styled.aside`
 	flex-direction: column;
 	justify-content: center;
 	flex: 7;
-	background: ${COLORS.purple300};
+	background: ${COLORS.primary};
 	color: ${COLORS.white1000};
 	padding: 12rem 8rem;
 `;

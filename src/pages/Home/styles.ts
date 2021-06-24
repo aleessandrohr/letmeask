@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { Button } from "components/Button";
+import { Input } from "components/Input";
 
 import { COLORS } from "assets/colors";
 
@@ -29,10 +30,10 @@ export const ContentContainer = styled.main`
 
 export const Content = styled.div`
 	display: flex;
+	align-items: stretch;
 	flex-direction: column;
 	width: 100%;
 	max-width: 32rem;
-	align-items: stretch;
 	text-align: center;
 `;
 
@@ -40,23 +41,9 @@ export const LogoIcon = styled.img`
 	align-self: center;
 `;
 
-export const CreateRoom = styled.button`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 5rem;
+export const CreateRoom = styled(Button)`
 	background: ${COLORS.red500};
-	color: ${COLORS.white1000};
-	font-weight: 500;
-	border-radius: 8px;
 	margin-top: 6.4rem;
-	transition: filter 0.2s ease-out;
-	cursor: pointer;
-
-	&:hover,
-	&:focus {
-		filter: brightness(0.9);
-	}
 `;
 
 export const GoogleIcon = styled.img`
@@ -83,14 +70,7 @@ export const RoomEnter = styled.div`
 
 export const Form = styled.form``;
 
-export const Input = styled.input`
-	width: 100%;
-	height: 5rem;
-	border-radius: 8px;
-	padding: 0 1.6rem;
-	background: ${COLORS.white1000};
-	border: 1px solid ${COLORS.gray200};
-`;
+export const Code = styled(Input)``;
 
 export const Submit = styled(Button)`
 	width: 100%;

@@ -1,7 +1,5 @@
 import { toast } from "react-toastify";
 
-import { Toast } from "components/Toast";
-
 import { Copy } from "assets/images/svgs";
 
 import { Container, ImgContainer, Img, Code } from "./styles";
@@ -25,8 +23,7 @@ export const RoomCode: React.FC<Props> = ({ code }) => {
 			<ImgContainer>
 				<Img src={Copy} alt="Copiar o código da sala" />
 			</ImgContainer>
-			<Code>Sala #{code}</Code>
-			<Toast />
+			<Code>#{code}</Code>
 		</Container>
 	);
 };

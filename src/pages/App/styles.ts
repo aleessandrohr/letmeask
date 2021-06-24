@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
 
 		&:focus-visible {
 			outline: 2px solid transparent;
-		 	box-shadow: 0 0 0 2px ${COLORS.black1000};
+		 	box-shadow: 0 0 0 2px ${COLORS.gray600};
 		}
   }
 
@@ -25,13 +25,13 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     background: ${COLORS.background};
-    color: ${COLORS.primary};
+    color: ${COLORS.gray600};
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-size: 1.6rem;
   }
 
 	a {
-		color: ${COLORS.primary};
+		color: ${COLORS.gray600};
 		text-decoration: none;
 	}
 
@@ -50,12 +50,12 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	::-webkit-scrollbar-track {
-		background: ${COLORS.gray250};
+		background: ${COLORS.gray50};
 		border-radius: 4px;
 	}
 
 	::-webkit-scrollbar-thumb {
-		background: ${COLORS.gray500};
+		background: ${COLORS.primary};
 		border-radius: 4px;
 	}
 

@@ -3,6 +3,7 @@ import { Link as ReactLink } from "react-router-dom";
 import styled from "styled-components";
 
 import { Button } from "components/Button";
+import { Input } from "components/Input";
 
 import { COLORS } from "assets/colors";
 
@@ -43,14 +44,7 @@ export const CreateRoom = styled.h1`
 
 export const Form = styled.form``;
 
-export const Input = styled.input`
-	width: 100%;
-	height: 5rem;
-	border-radius: 8px;
-	padding: 0 1.6rem;
-	background: ${COLORS.white1000};
-	border: 1px solid ${COLORS.gray200};
-`;
+export const RoomName = styled(Input)``;
 
 export const Submit = styled(Button)`
 	width: 100%;
