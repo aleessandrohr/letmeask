@@ -3,6 +3,10 @@ import { toast } from "react-toastify";
 
 import { Routes } from "pages/routes";
 
+import { SignOut } from "components/SignOut";
+
+import { AuthProvider } from "contexts/auth";
+
 import { GlobalStyle } from "./styles";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -18,7 +22,10 @@ toast.configure({
 
 export const App: React.FC = () => (
 	<>
-		<Routes />
+		<AuthProvider>
+			<SignOut />
+			<Routes />
+		</AuthProvider>
 		<GlobalStyle />
 	</>
 );

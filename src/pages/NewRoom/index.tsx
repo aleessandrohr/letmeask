@@ -35,6 +35,8 @@ export const NewRoom: React.FC = () => {
 		},
 	});
 
+	if (!user) history.push("/");
+
 	const handleCreateRoom = handleSubmit(async ({ newRoom }) => {
 		const roomRef = database.ref("rooms");
 		const firebaseRoom = await roomRef.push({
