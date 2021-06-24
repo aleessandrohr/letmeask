@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 
+import { Loading } from "components/Loading";
+
 import { firebase, auth } from "services/firebase";
 
 interface User {
@@ -9,23 +11,23 @@ interface User {
 }
 
 interface IAuthContext {
-	user?: User;
+	user?: User | null;
 	signInWithGoogle: () => Promise<void>;
 }
 
 export const AuthContext = createContext({} as IAuthContext);
 
 export const AuthProvider: React.FC = ({ children }) => {
-	const [user, setUser] = useState<User>();
+	const [user, setUser] = useState<User | null>();
 
 	useEffect(() => {
 		// eslint-disable-next-line @typescript-eslint/no-shadow
 		const unsubscribe = auth.onAuthStateChanged(user => {
 			if (user) {
-				const { displayName, photoURL, uid } = user;
+				const { uid, displayName, photoURL } = user;
 
 				if (!displayName || !photoURL) {
-					throw new Error("Missing information from Google Account");
+					throw new Error("Missing information from Google Account!");
 				}
 
 				setUser({
@@ -33,6 +35,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 					name: displayName,
 					avatar: photoURL,
 				});
+			} else {
+				setUser(null);
 			}
 		});
 
@@ -41,14 +45,14 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 	const signInWithGoogle = async () => {
 		const provider = new firebase.auth.GoogleAuthProvider();
+		// eslint-disable-next-line @typescript-eslint/no-shadow
+		const { user } = await auth.signInWithPopup(provider);
 
-		const result = await auth.signInWithPopup(provider);
-
-		if (result.user) {
-			const { displayName, photoURL, uid } = result.user;
+		if (user) {
+			const { uid, displayName, photoURL } = user;
 
 			if (!displayName || !photoURL) {
-				throw new Error("Missing information from Google Account");
+				throw new Error("Missing information from Google Account!");
 			}
 
 			setUser({
@@ -58,6 +62,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 			});
 		}
 	};
+
+	if (user === undefined) {
+		return <Loading />;
+	}
 
 	return (
 		<AuthContext.Provider value={{ user, signInWithGoogle }}>

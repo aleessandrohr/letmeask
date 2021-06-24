@@ -16,7 +16,7 @@ import {
 	LogoIcon,
 	CreateRoom,
 	Form,
-	Input,
+	RoomName,
 	Submit,
 	RoomEnter,
 	Link,
@@ -42,7 +42,7 @@ export const NewRoom: React.FC = () => {
 			authorId: user?.id,
 		});
 
-		history.push(`/rooms/${firebaseRoom.key}`);
+		history.push(`/admin/rooms/${firebaseRoom.key}`);
 	});
 
 	return (
@@ -53,7 +53,7 @@ export const NewRoom: React.FC = () => {
 					<LogoIcon src={Logo} alt="Letmeask" />
 					<CreateRoom>Criar uma nova sala</CreateRoom>
 					<Form onSubmit={handleCreateRoom}>
-						<Input
+						<RoomName
 							type="text"
 							placeholder="Nome da sala"
 							{...register("newRoom", {

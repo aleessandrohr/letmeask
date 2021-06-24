@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { Aside } from "components/Aside";
-import { Toast } from "components/Toast";
 
 import { useAuth } from "hooks/useAuth";
 
@@ -20,7 +19,7 @@ import {
 	GoogleIcon,
 	RoomEnter,
 	Form,
-	Input,
+	Code,
 	Submit,
 } from "./styles";
 
@@ -31,7 +30,12 @@ interface Data {
 export const Home: React.FC = () => {
 	const history = useHistory();
 	const { user, signInWithGoogle } = useAuth();
-	const { register, reset, handleSubmit } = useForm<Data>({
+	const {
+		register,
+		reset,
+		handleSubmit,
+		formState: { isSubmitting },
+	} = useForm<Data>({
 		defaultValues: {
 			roomCode: "",
 		},
@@ -44,13 +48,19 @@ export const Home: React.FC = () => {
 	};
 
 	const handleJoinRoom = handleSubmit(async ({ roomCode }) => {
-		reset();
-
 		const room = `rooms/${roomCode}`;
 		const roomRef = await database.ref(room).get();
 
 		if (!roomRef.exists()) {
-			toast.error("Room does not exist!");
+			toast.error("Sala não existe!");
+			reset();
+
+			return;
+		}
+
+		if (roomRef.val().endedAt) {
+			toast.warn("Sala fechada!");
+			reset();
 
 			return;
 		}
@@ -70,19 +80,21 @@ export const Home: React.FC = () => {
 					</CreateRoom>
 					<RoomEnter>ou entre em uma sala</RoomEnter>
 					<Form onSubmit={handleJoinRoom}>
-						<Input
+						<Code
 							type="text"
 							placeholder="Digite o código da sala"
+							disabled={isSubmitting}
 							{...register("roomCode", {
 								required: true,
 								setValueAs: value => value.trim(),
 							})}
 						/>
-						<Submit type="submit">Entrar na sala</Submit>
+						<Submit type="submit" disabled={isSubmitting}>
+							Entrar na sala
+						</Submit>
 					</Form>
 				</Content>
 			</ContentContainer>
-			<Toast />
 		</Container>
 	);
 };
