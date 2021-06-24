@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import { Loading } from "components/Loading";
 
@@ -13,6 +14,7 @@ interface User {
 interface IAuthContext {
 	user?: User | null;
 	signInWithGoogle: () => Promise<void>;
+	signOut: () => Promise<void>;
 }
 
 export const AuthContext = createContext({} as IAuthContext);
@@ -63,12 +65,26 @@ export const AuthProvider: React.FC = ({ children }) => {
 		}
 	};
 
+	const signOut = async () => {
+		const signOutConfirm = confirm("Tem certeza que deseja deslogar?");
+
+		if (signOutConfirm) {
+			try {
+				await auth.signOut();
+
+				toast.success("Deslogado com sucesso!");
+			} catch (error) {
+				toast.error(error.message);
+			}
+		}
+	};
+
 	if (user === undefined) {
 		return <Loading />;
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, signInWithGoogle }}>
+		<AuthContext.Provider value={{ user, signInWithGoogle, signOut }}>
 			{children}
 		</AuthContext.Provider>
 	);
