@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { AdminRoom } from "pages/AdminRoom";
 import { Home } from "pages/Home";
@@ -12,6 +12,7 @@ export const Routes: React.FC = () => (
 			<Route path="/rooms/new" component={NewRoom} />
 			<Route path="/rooms/:id" component={Room} />
 			<Route path="/admin/rooms/:id" component={AdminRoom} />
+			<Route path="*" render={() => <Redirect to="/" />} />
 		</Switch>
 	</BrowserRouter>
 );

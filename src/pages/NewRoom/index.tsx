@@ -1,7 +1,10 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { Aside } from "components/Aside";
+import { PageLoading } from "components/PageLoading";
 
 import { useAuth } from "hooks/useAuth";
 
@@ -35,7 +38,12 @@ export const NewRoom: React.FC = () => {
 		},
 	});
 
-	if (!user) history.push("/");
+	useEffect(() => {
+		if (user === null) {
+			toast.info("Usuário não autenticado!");
+			history.push("/");
+		}
+	}, [history, user]);
 
 	const handleCreateRoom = handleSubmit(async ({ newRoom }) => {
 		const roomRef = database.ref("rooms");
@@ -46,6 +54,10 @@ export const NewRoom: React.FC = () => {
 
 		history.push(`/admin/rooms/${firebaseRoom.key}`);
 	});
+
+	if (user === undefined) {
+		return <PageLoading />;
+	}
 
 	return (
 		<Container>
