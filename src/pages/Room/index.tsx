@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { Button } from "components/Button";
+import { PageLoading } from "components/PageLoading";
 import { Question } from "components/Question";
 import { RoomCode } from "components/RoomCode";
 
@@ -52,11 +53,11 @@ export const Room: React.FC = () => {
 			newQuestion: "",
 		},
 	});
-	const { title, questions } = useRoom(roomId);
+	const { roomExists, title, endedAt, questions } = useRoom(roomId);
 
 	const handleSendQuestion = handleSubmit(async ({ newQuestion }) => {
 		if (!user) {
-			toast.error("Você deve está logado!");
+			toast.info("Você deve está logado!");
 
 			return;
 		}
@@ -73,6 +74,7 @@ export const Room: React.FC = () => {
 
 		try {
 			await database.ref(`rooms/${roomId}/questions`).push(question);
+
 			reset();
 			toast.success("Pergunta enviada!");
 		} catch (error) {
@@ -91,6 +93,10 @@ export const Room: React.FC = () => {
 				.push({ authorId: user?.id });
 		}
 	};
+
+	if (roomExists === undefined || endedAt === undefined) {
+		return <PageLoading />;
+	}
 
 	return (
 		<Container>

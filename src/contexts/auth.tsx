@@ -1,8 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
-import { Loading } from "components/Loading";
-
 import { firebase, auth } from "services/firebase";
 
 interface User {
@@ -78,10 +76,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 			}
 		}
 	};
-
-	if (user === undefined) {
-		return <Loading />;
-	}
 
 	return (
 		<AuthContext.Provider value={{ user, signInWithGoogle, signOut }}>

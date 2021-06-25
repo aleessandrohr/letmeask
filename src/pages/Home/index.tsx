@@ -59,7 +59,7 @@ export const Home: React.FC = () => {
 		}
 
 		if (roomRef.val().endedAt) {
-			toast.warn("Sala fechada!");
+			toast.info("Sala fechada!");
 			reset();
 
 			return;

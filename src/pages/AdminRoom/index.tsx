@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { useHistory, useParams, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
+import { PageLoading } from "components/PageLoading";
 import { Question } from "components/Question";
 import { RoomCode } from "components/RoomCode";
 
@@ -39,7 +42,17 @@ export const AdminRoom: React.FC = () => {
 	const { user } = useAuth();
 	const history = useHistory();
 	const { id: roomId } = useParams<Params>();
-	const { title, questions } = useRoom(roomId);
+	const { roomExists, authorId, title, endedAt, questions } = useRoom(roomId);
+
+	useEffect(() => {
+		if (user === null) {
+			toast.info("Usuário não autenticado!");
+			history.push("/");
+		} else if (authorId && user?.id !== authorId) {
+			toast.info("Permissão negada!");
+			history.push("/");
+		}
+	}, [history, user, authorId]);
 
 	const handleEndRoom = async () => {
 		const confirmEndRoom = confirm("Tem certeza que deseja fechar a sala?");
@@ -92,6 +105,15 @@ export const AdminRoom: React.FC = () => {
 			await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
 		}
 	};
+
+	if (
+		roomExists === undefined ||
+		user === undefined ||
+		endedAt === undefined ||
+		!authorId
+	) {
+		return <PageLoading />;
+	}
 
 	return (
 		<Container>
