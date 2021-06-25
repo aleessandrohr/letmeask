@@ -1,4 +1,12 @@
-import { Container, Content, Footer, UserInfo, Img, Name } from "./styles";
+import {
+	Container,
+	Content,
+	Footer,
+	UserInfo,
+	UserImg,
+	UserName,
+	ChildrenContainer,
+} from "./styles";
 
 interface Props {
 	content: string;
@@ -6,17 +14,30 @@ interface Props {
 		name: string;
 		avatar: string;
 	};
+	isAnswered?: boolean;
+	isHighlighted?: boolean;
 }
 
-export const Question: React.FC<Props> = ({ content, author, children }) => (
-	<Container>
+export const Question: React.FC<Props> = ({
+	content,
+	author,
+	isAnswered,
+	isHighlighted,
+	children,
+}) => (
+	<Container
+		isAnswered={isAnswered}
+		isHighlighted={isHighlighted && !isAnswered}
+	>
 		<Content>{content}</Content>
 		<Footer>
 			<UserInfo>
-				<Img src={author.avatar} alt={author.name} />
-				<Name>{author.name}</Name>
+				<UserImg src={author.avatar} alt={author.name} />
+				<UserName isAnswered={isAnswered} isHighlighted={isHighlighted}>
+					{author.name}
+				</UserName>
 			</UserInfo>
-			{children}
+			<ChildrenContainer>{children}</ChildrenContainer>
 		</Footer>
 	</Container>
 );

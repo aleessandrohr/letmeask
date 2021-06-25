@@ -1,12 +1,12 @@
 import { useHistory, useParams, Link } from "react-router-dom";
-import { ScaleLoader } from "react-spinners";
 
 import { Question } from "components/Question";
 import { RoomCode } from "components/RoomCode";
 
+import { useAuth } from "hooks/useAuth";
 import { useRoom } from "hooks/useRoom";
 
-import { Logo, Delete } from "assets/images/svgs";
+import { Logo } from "assets/images/svgs";
 
 import { database } from "services/firebase";
 
@@ -22,8 +22,12 @@ import {
 	Title,
 	QuestionCounter,
 	Questions,
-	Loading,
-	DeleteQuestion,
+	LikeButton,
+	LikeIcon,
+	LikeCounter,
+	QuestionButton,
+	CheckIcon,
+	AnswerIcon,
 	DeleteIcon,
 } from "./styles";
 
@@ -32,6 +36,7 @@ interface Params {
 }
 
 export const AdminRoom: React.FC = () => {
+	const { user } = useAuth();
 	const history = useHistory();
 	const { id: roomId } = useParams<Params>();
 	const { title, questions } = useRoom(roomId);
@@ -46,6 +51,36 @@ export const AdminRoom: React.FC = () => {
 
 			history.push("/");
 		}
+	};
+
+	const handleLikeQuestion = async (questionId: string, likeId?: string) => {
+		if (likeId) {
+			await database
+				.ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`)
+				.remove();
+		} else {
+			await database
+				.ref(`rooms/${roomId}/questions/${questionId}/likes`)
+				.push({ authorId: user?.id });
+		}
+	};
+
+	const handleCheckQuestionAsAnswered = async (
+		questionId: string,
+		isAnswered: boolean,
+	) => {
+		await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+			isAnswered: !isAnswered,
+		});
+	};
+
+	const handleHighlightQuestion = async (
+		questionId: string,
+		isHighlighted: boolean,
+	) => {
+		await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+			isHighlighted: !isHighlighted,
+		});
 	};
 
 	const handleDeleteQuestion = async (questionId: string) => {
@@ -81,21 +116,57 @@ export const AdminRoom: React.FC = () => {
 					</QuestionCounter>
 				</TitleContainer>
 				<Questions>
-					{!title && (
-						<Loading>
-							<ScaleLoader />
-						</Loading>
-					)}
-					{questions?.map(({ content, author, id }) => (
-						<Question key={id} content={content} author={author}>
-							<DeleteQuestion
-								type="button"
-								onClick={() => handleDeleteQuestion(id)}
+					{questions?.map(
+						({
+							content,
+							author,
+							id,
+							isAnswered,
+							isHighlighted,
+							likeCount,
+							likeId,
+						}) => (
+							<Question
+								key={id}
+								content={content}
+								author={author}
+								isAnswered={isAnswered}
+								isHighlighted={isHighlighted}
 							>
-								<DeleteIcon src={Delete} alt="Remover pergunta" />
-							</DeleteQuestion>
-						</Question>
-					))}
+								<LikeButton
+									type="button"
+									aria-label="Marcar pergunta como gostei"
+									onClick={() => handleLikeQuestion(id, likeId)}
+									liked={likeId}
+									disabled={isAnswered}
+								>
+									{likeCount > 0 && <LikeCounter>{likeCount}</LikeCounter>}
+									<LikeIcon />
+								</LikeButton>
+								<QuestionButton
+									type="button"
+									aria-label="Marcar pergunta como respondida"
+									onClick={() => handleCheckQuestionAsAnswered(id, isAnswered)}
+								>
+									<CheckIcon />
+								</QuestionButton>
+								<QuestionButton
+									type="button"
+									aria-label="Dar destaque à pergunta"
+									onClick={() => handleHighlightQuestion(id, isHighlighted)}
+								>
+									<AnswerIcon />
+								</QuestionButton>
+								<QuestionButton
+									type="button"
+									ari-label="Remover pergunta"
+									onClick={() => handleDeleteQuestion(id)}
+								>
+									<DeleteIcon />
+								</QuestionButton>
+							</Question>
+						),
+					)}
 				</Questions>
 			</Main>
 		</Container>
