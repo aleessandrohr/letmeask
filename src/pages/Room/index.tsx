@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { useParams, Link } from "react-router-dom";
-import { ScaleLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
 import { Button } from "components/Button";
@@ -32,8 +31,7 @@ import {
 	LoginContainer,
 	Login,
 	Questions,
-	Loading,
-	Like,
+	LikeButton,
 	LikeCounter,
 	LikeIcon,
 } from "./styles";
@@ -114,6 +112,7 @@ export const Room: React.FC = () => {
 				<Form onSubmit={handleSendQuestion}>
 					<Textarea
 						placeholder="O que você quer perguntar?"
+						disabled={!user}
 						{...register("newQuestion", {
 							required: true,
 							setValueAs: value => value.trim(),
@@ -129,7 +128,9 @@ export const Room: React.FC = () => {
 						{!user && (
 							<LoginContainer>
 								Para enviar uma pergunta,{" "}
-								<Login onClick={signInWithGoogle}>faça seu login</Login>
+								<Login onClick={signInWithGoogle}>
+									faça seu login com o google
+								</Login>
 							</LoginContainer>
 						)}
 						<Button type="submit" disabled={!user}>
@@ -138,24 +139,36 @@ export const Room: React.FC = () => {
 					</Footer>
 				</Form>
 				<Questions>
-					{!title && (
-						<Loading>
-							<ScaleLoader />
-						</Loading>
-					)}
-					{questions?.map(({ content, author, id, likeCount, likeId }) => (
-						<Question key={id} content={content} author={author}>
-							<Like
-								type="button"
-								aria-label="Marcar como gostei"
-								onClick={() => handleLikeQuestion(id, likeId)}
-								liked={likeId}
+					{questions?.map(
+						({
+							content,
+							author,
+							id,
+							likeCount,
+							likeId,
+							isAnswered,
+							isHighlighted,
+						}) => (
+							<Question
+								key={id}
+								content={content}
+								author={author}
+								isAnswered={isAnswered}
+								isHighlighted={isHighlighted}
 							>
-								{likeCount > 0 && <LikeCounter>{likeCount}</LikeCounter>}
-								<LikeIcon />
-							</Like>
-						</Question>
-					))}
+								<LikeButton
+									type="button"
+									aria-label="Marcar pergunta como gostei"
+									onClick={() => handleLikeQuestion(id, likeId)}
+									liked={likeId}
+									disabled={isAnswered}
+								>
+									{likeCount > 0 && <LikeCounter>{likeCount}</LikeCounter>}
+									<LikeIcon />
+								</LikeButton>
+							</Question>
+						),
+					)}
 				</Questions>
 			</Main>
 		</Container>

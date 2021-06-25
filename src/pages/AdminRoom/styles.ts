@@ -3,6 +3,27 @@ import styled from "styled-components";
 import { Button } from "components/Button";
 
 import { COLORS } from "assets/colors";
+import {
+	LikeComponent,
+	CheckComponent,
+	AnswerComponent,
+	DeleteComponent,
+} from "assets/images/svgs";
+
+const ButtonBase = styled.button`
+	background: transparent;
+	transition: filter 0.2s ease-out, opacity 0.2s ease-out;
+	cursor: pointer;
+
+	&:not(:disabled):hover {
+		filter: brightness(0.7);
+	}
+
+	&:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+`;
 
 export const Container = styled.div``;
 
@@ -62,23 +83,29 @@ export const QuestionCounter = styled.span`
 	margin-left: 1.6rem;
 `;
 
-export const Questions = styled.div`
-	margin-top: 3.2rem;
+export const Questions = styled.ul`
+	margin: 3.2rem 0;
 `;
 
-export const Loading = styled.div`
+export const LikeButton = styled(ButtonBase)<{ liked?: string }>`
 	display: flex;
-	align-items: center;
-	justify-content: center;
+	align-items: flex-end;
+	color: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
+	gap: 0.8rem;
+	margin: 0 2rem;
 
-	> span > span {
-		background: ${COLORS.primary};
+	> svg > path {
+		stroke: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
 	}
 `;
+export const LikeCounter = styled.span``;
 
-export const DeleteQuestion = styled.button`
-	background: transparent;
-	cursor: pointer;
-`;
+export const LikeIcon = styled(LikeComponent)``;
 
-export const DeleteIcon = styled.img``;
+export const QuestionButton = styled(ButtonBase)``;
+
+export const CheckIcon = styled(CheckComponent)``;
+
+export const AnswerIcon = styled(AnswerComponent)``;
+
+export const DeleteIcon = styled(DeleteComponent)``;

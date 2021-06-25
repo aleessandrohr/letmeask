@@ -56,9 +56,14 @@ export const Textarea = styled.textarea`
 	min-height: 7rem;
 	background: ${COLORS.white950};
 	border-radius: 8px;
-	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.84);
+	box-shadow: 0 2px 12px ${COLORS.black1000}d6;
 	padding: 1.6rem;
 	resize: vertical;
+
+	&:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
 
 	::-webkit-scrollbar {
 		width: 0.8rem;
@@ -106,35 +111,30 @@ export const Login = styled.button`
 	cursor: pointer;
 `;
 
-export const Questions = styled.div`
-	margin-top: 3.2rem;
+export const Questions = styled.ul`
+	margin: 3.2rem 0;
 `;
 
-export const Loading = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	> span > span {
-		background: ${COLORS.primary};
-	}
-`;
-
-export const Like = styled.button<{ liked?: string }>`
+export const LikeButton = styled.button<{ liked?: string }>`
 	display: flex;
 	align-items: flex-end;
 	background: transparent;
 	color: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
 	gap: 0.8rem;
-	transition: filter 0.2s ease-out;
+	transition: filter 0.2s ease-out, opacity 0.2s ease-out;
 	cursor: pointer;
 
 	> svg > path {
 		stroke: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
 	}
 
-	&:hover {
+	&:not(:disabled):hover {
 		filter: brightness(0.7);
+	}
+
+	&:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
 	}
 `;
 
