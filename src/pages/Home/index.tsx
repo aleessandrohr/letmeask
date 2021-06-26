@@ -74,7 +74,7 @@ export const Home: React.FC = () => {
 			<ContentContainer>
 				<Content>
 					<LogoIcon src={Logo} alt="Letmeask" />
-					<CreateRoom onClick={handleCreateRoom}>
+					<CreateRoom onClick={handleCreateRoom} disabled={user === undefined}>
 						<GoogleIcon src={Google} alt="Logo do Google" />
 						Crie sua sala com o Google
 					</CreateRoom>
