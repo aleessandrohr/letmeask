@@ -7,12 +7,14 @@ export const Container = styled.aside`
 	flex-direction: column;
 	justify-content: center;
 	flex: 7;
+	height: 100%;
 	background: ${COLORS.primary};
 	color: ${COLORS.white1000};
 	padding: 12rem 8rem;
 `;
 
 export const IllustrationIcon = styled.img`
+	height: 100%;
 	max-width: 32rem;
 `;
 

@@ -13,22 +13,28 @@ export const Container = styled.div`
 	min-height: 100vh;
 	height: 100vh;
 	max-height: 100vh;
+	overflow-y: hidden;
 `;
 
 export const ContentContainer = styled.main`
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	flex: 8;
+	height: 100%;
 	padding: 0 3.2rem;
+	overflow-y: auto;
 `;
 
 export const Content = styled.div`
 	display: flex;
 	flex-direction: column;
+	align-items: stretch;
+	justify-content: center;
 	width: 100%;
 	max-width: 32rem;
-	align-items: stretch;
+	height: 100%;
 	text-align: center;
 `;
 
