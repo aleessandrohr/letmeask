@@ -28,8 +28,13 @@ const ButtonBase = styled.button`
 export const Container = styled.div``;
 
 export const Description = styled.header`
-	padding: 2.4rem;
+	position: sticky;
+	top: 0;
+	background: ${COLORS.background};
 	border-bottom: 1px solid ${COLORS.gray50};
+	box-shadow: 0 1px 3px ${COLORS.black1000}50;
+	padding: 2.4rem;
+	z-index: 30;
 `;
 
 export const Content = styled.div`
@@ -38,6 +43,10 @@ export const Content = styled.div`
 	align-items: center;
 	max-width: 112.8rem;
 	margin: 0 auto;
+
+	@media (max-width: 600px) {
+		flex-direction: column;
+	}
 `;
 
 export const Img = styled.img`
@@ -48,9 +57,15 @@ export const Row = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 1.6rem;
+	padding-left: 2.4rem;
 
 	> button {
 		height: 4rem;
+	}
+
+	@media (max-width: 593px) {
+		flex-direction: column;
+		padding: 2.4rem 0 0;
 	}
 `;
 
@@ -59,6 +74,7 @@ export const CloseRoom = styled(Button)``;
 export const Main = styled.main`
 	max-width: 80rem;
 	margin: 0 auto;
+	padding: 0 2rem;
 `;
 
 export const TitleContainer = styled.div`
@@ -87,20 +103,28 @@ export const Questions = styled.ul`
 	margin: 3.2rem 0;
 `;
 
+export const QuestionButtonContainer = styled.div``;
+
 export const LikeButton = styled(ButtonBase)<{ liked?: string }>`
 	display: flex;
 	align-items: flex-end;
 	color: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
 	gap: 0.8rem;
-	margin: 0 2rem;
 
 	> svg > path {
 		stroke: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
 	}
+
+	@media (max-width: 400px) {
+		flex-direction: column-reverse;
+		align-items: center;
+	}
 `;
 export const LikeCounter = styled.span``;
 
-export const LikeIcon = styled(LikeComponent)``;
+export const LikeIcon = styled(LikeComponent)`
+	align-self: center;
+`;
 
 export const QuestionButton = styled(ButtonBase)``;
 

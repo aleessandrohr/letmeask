@@ -11,6 +11,10 @@ export const Container = styled.aside`
 	background: ${COLORS.primary};
 	color: ${COLORS.white1000};
 	padding: 12rem 8rem;
+
+	@media (max-width: 682px) {
+		display: none;
+	}
 `;
 
 export const IllustrationIcon = styled.img`

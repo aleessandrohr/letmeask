@@ -36,6 +36,11 @@ export const Footer = styled.footer`
 	justify-content: space-between;
 	align-items: center;
 	margin-top: 2.4rem;
+
+	@media (max-width: 400px) {
+		flex-direction: column-reverse;
+		align-items: flex-start;
+	}
 `;
 
 export const UserInfo = styled.div`
@@ -62,4 +67,19 @@ export const UserName = styled.span<{
 export const ChildrenContainer = styled.div`
 	display: flex;
 	gap: 1.6rem;
+
+	> div {
+		display: flex;
+		gap: 1.6rem;
+	}
+
+	@media (max-width: 400px) {
+		width: 100%;
+		align-items: flex-start;
+		justify-content: space-between;
+
+		> div {
+			margin-bottom: 2rem;
+		}
+	}
 `;

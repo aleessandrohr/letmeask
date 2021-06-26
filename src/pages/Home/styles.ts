@@ -47,6 +47,7 @@ export const LogoIcon = styled.img`
 `;
 
 export const CreateRoom = styled(Button)`
+	min-height: 5rem;
 	background: ${COLORS.red500};
 	margin-top: 6.4rem;
 `;

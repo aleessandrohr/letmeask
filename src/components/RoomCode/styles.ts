@@ -10,6 +10,7 @@ export const Container = styled.button`
 	border: 1px solid ${COLORS.primary};
 	overflow: hidden;
 	cursor: pointer;
+	word-break: break-all;
 `;
 
 export const ImgContainer = styled.div`
