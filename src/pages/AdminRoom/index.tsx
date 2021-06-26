@@ -25,6 +25,7 @@ import {
 	Title,
 	QuestionCounter,
 	Questions,
+	QuestionButtonContainer,
 	LikeButton,
 	LikeIcon,
 	LikeCounter,
@@ -107,8 +108,8 @@ export const AdminRoom: React.FC = () => {
 	};
 
 	if (
-		roomExists === undefined ||
 		user === undefined ||
+		roomExists === undefined ||
 		endedAt === undefined ||
 		!authorId
 	) {
@@ -155,37 +156,43 @@ export const AdminRoom: React.FC = () => {
 								isAnswered={isAnswered}
 								isHighlighted={isHighlighted}
 							>
-								<LikeButton
-									type="button"
-									aria-label="Marcar pergunta como gostei"
-									onClick={() => handleLikeQuestion(id, likeId)}
-									liked={likeId}
-									disabled={isAnswered}
-								>
-									{likeCount > 0 && <LikeCounter>{likeCount}</LikeCounter>}
-									<LikeIcon />
-								</LikeButton>
-								<QuestionButton
-									type="button"
-									aria-label="Marcar pergunta como respondida"
-									onClick={() => handleCheckQuestionAsAnswered(id, isAnswered)}
-								>
-									<CheckIcon />
-								</QuestionButton>
-								<QuestionButton
-									type="button"
-									aria-label="Dar destaque à pergunta"
-									onClick={() => handleHighlightQuestion(id, isHighlighted)}
-								>
-									<AnswerIcon />
-								</QuestionButton>
-								<QuestionButton
-									type="button"
-									ari-label="Remover pergunta"
-									onClick={() => handleDeleteQuestion(id)}
-								>
-									<DeleteIcon />
-								</QuestionButton>
+								<QuestionButtonContainer>
+									<LikeButton
+										type="button"
+										aria-label="Marcar pergunta como gostei"
+										onClick={() => handleLikeQuestion(id, likeId)}
+										liked={likeId}
+										disabled={isAnswered}
+									>
+										{likeCount > 0 && <LikeCounter>{likeCount}</LikeCounter>}
+										<LikeIcon />
+									</LikeButton>
+								</QuestionButtonContainer>
+								<QuestionButtonContainer>
+									<QuestionButton
+										type="button"
+										aria-label="Marcar pergunta como respondida"
+										onClick={() =>
+											handleCheckQuestionAsAnswered(id, isAnswered)
+										}
+									>
+										<CheckIcon />
+									</QuestionButton>
+									<QuestionButton
+										type="button"
+										aria-label="Dar destaque à pergunta"
+										onClick={() => handleHighlightQuestion(id, isHighlighted)}
+									>
+										<AnswerIcon />
+									</QuestionButton>
+									<QuestionButton
+										type="button"
+										ari-label="Remover pergunta"
+										onClick={() => handleDeleteQuestion(id)}
+									>
+										<DeleteIcon />
+									</QuestionButton>
+								</QuestionButtonContainer>
 							</Question>
 						),
 					)}

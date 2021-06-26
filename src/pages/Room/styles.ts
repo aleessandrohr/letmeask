@@ -6,8 +6,13 @@ import { LikeComponent } from "assets/images/svgs";
 export const Container = styled.div``;
 
 export const Description = styled.header`
-	padding: 2.4rem;
+	position: sticky;
+	top: 0;
+	background: ${COLORS.background};
 	border-bottom: 1px solid ${COLORS.gray50};
+	box-shadow: 0 1px 3px ${COLORS.black1000}50;
+	padding: 2.4rem;
+	z-index: 30;
 `;
 
 export const Content = styled.div`
@@ -16,6 +21,18 @@ export const Content = styled.div`
 	align-items: center;
 	max-width: 112.8rem;
 	margin: 0 auto;
+
+	> button {
+		margin-left: 2.4rem;
+	}
+
+	@media (max-width: 430px) {
+		flex-direction: column;
+
+		> button {
+			margin: 2.4rem 0 0;
+		}
+	}
 `;
 
 export const Img = styled.img`
@@ -25,6 +42,7 @@ export const Img = styled.img`
 export const Main = styled.main`
 	max-width: 80rem;
 	margin: 0 auto;
+	padding: 0 2rem;
 `;
 
 export const TitleContainer = styled.div`
@@ -93,13 +111,14 @@ export const UserName = styled.span`
 	color: ${COLORS.gray600};
 	font-size: 1.4rem;
 	font-weight: 500;
-	margin-left: 0.8rem;
+	margin: 0 0.8rem;
 `;
 
 export const LoginContainer = styled.span`
 	color: ${COLORS.gray300};
 	font-size: 1.4rem;
 	font-weight: 500;
+	margin-right: 0.8rem;
 `;
 
 export const Login = styled.button`
@@ -115,6 +134,8 @@ export const Questions = styled.ul`
 	margin: 3.2rem 0;
 `;
 
+export const QuestionButtonContainer = styled.div``;
+
 export const LikeButton = styled.button<{ liked?: string }>`
 	display: flex;
 	align-items: flex-end;
@@ -124,10 +145,6 @@ export const LikeButton = styled.button<{ liked?: string }>`
 	transition: filter 0.2s ease-out, opacity 0.2s ease-out;
 	cursor: pointer;
 
-	> svg > path {
-		stroke: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
-	}
-
 	&:not(:disabled):hover {
 		filter: brightness(0.7);
 	}
@@ -136,8 +153,19 @@ export const LikeButton = styled.button<{ liked?: string }>`
 		opacity: 0.6;
 		cursor: not-allowed;
 	}
+
+	> svg > path {
+		stroke: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
+	}
+
+	@media (max-width: 400px) {
+		flex-direction: column-reverse;
+		align-items: center;
+	}
 `;
 
 export const LikeCounter = styled.span``;
 
-export const LikeIcon = styled(LikeComponent)``;
+export const LikeIcon = styled(LikeComponent)`
+	align-self: center;
+`;

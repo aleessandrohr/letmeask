@@ -32,6 +32,7 @@ import {
 	LoginContainer,
 	Login,
 	Questions,
+	QuestionButtonContainer,
 	LikeButton,
 	LikeCounter,
 	LikeIcon,
@@ -134,9 +135,7 @@ export const Room: React.FC = () => {
 						{!user && (
 							<LoginContainer>
 								Para enviar uma pergunta,{" "}
-								<Login onClick={signInWithGoogle}>
-									faça seu login com o google
-								</Login>
+								<Login onClick={signInWithGoogle}>faça seu login</Login>
 							</LoginContainer>
 						)}
 						<Button type="submit" disabled={!user}>
@@ -162,16 +161,18 @@ export const Room: React.FC = () => {
 								isAnswered={isAnswered}
 								isHighlighted={isHighlighted}
 							>
-								<LikeButton
-									type="button"
-									aria-label="Marcar pergunta como gostei"
-									onClick={() => handleLikeQuestion(id, likeId)}
-									liked={likeId}
-									disabled={isAnswered}
-								>
-									{likeCount > 0 && <LikeCounter>{likeCount}</LikeCounter>}
-									<LikeIcon />
-								</LikeButton>
+								<QuestionButtonContainer>
+									<LikeButton
+										type="button"
+										aria-label="Marcar pergunta como gostei"
+										onClick={() => handleLikeQuestion(id, likeId)}
+										liked={likeId}
+										disabled={isAnswered}
+									>
+										{likeCount > 0 && <LikeCounter>{likeCount}</LikeCounter>}
+										<LikeIcon />
+									</LikeButton>
+								</QuestionButtonContainer>
 							</Question>
 						),
 					)}
