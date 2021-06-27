@@ -1,16 +1,15 @@
 import styled from "styled-components";
 
-import { COLORS } from "assets/colors";
-import { LikeComponent } from "assets/images/svgs";
+import { LikeComponent, LogoComponent } from "assets/images/svgs";
 
 export const Container = styled.div``;
 
 export const Description = styled.header`
 	position: sticky;
 	top: 0;
-	background: ${COLORS.background};
-	border-bottom: 1px solid ${COLORS.gray50};
-	box-shadow: 0 1px 3px ${COLORS.black1000}50;
+	background: ${({ theme }) => theme.colors.background};
+	border-bottom: 1px solid ${({ theme }) => theme.colors.gray50};
+	box-shadow: 0 1px 3px ${({ theme }) => theme.colors.black1000}50;
 	padding: 2.4rem;
 	z-index: 30;
 `;
@@ -35,8 +34,12 @@ export const Content = styled.div`
 	}
 `;
 
-export const Img = styled.img`
+export const LogoIcon = styled(LogoComponent)`
 	max-height: 4.5rem;
+
+	> path:nth-child(n + 1):nth-child(-n + 5) {
+		fill: ${({ theme }) => theme.colors.gray600};
+	}
 `;
 
 export const Main = styled.main`
@@ -54,12 +57,12 @@ export const TitleContainer = styled.div`
 export const Title = styled.h1`
 	font-family: "Poppins", sans-serif;
 	font-size: 2.4rem;
-	color: ${COLORS.gray600};
+	color: ${({ theme }) => theme.colors.gray600};
 `;
 
 export const QuestionCounter = styled.span`
-	background: ${COLORS.pink500};
-	color: ${COLORS.white1000};
+	background: ${({ theme }) => theme.colors.pink500};
+	color: ${({ theme }) => theme.colors.white1000};
 	font-size: 1.4rem;
 	font-weight: 500;
 	border-radius: 50px;
@@ -72,9 +75,10 @@ export const Form = styled.form``;
 export const Textarea = styled.textarea`
 	width: 100%;
 	min-height: 7rem;
-	background: ${COLORS.white950};
+	background: ${({ theme }) => theme.colors.secondary950};
+	color: ${({ theme }) => theme.colors.gray600};
 	border-radius: 8px;
-	box-shadow: 0 2px 12px ${COLORS.black1000}d6;
+	box-shadow: 0 2px 12px ${({ theme }) => theme.colors.black1000}d6;
 	padding: 1.6rem;
 	resize: vertical;
 
@@ -108,14 +112,14 @@ export const UserImg = styled.img`
 `;
 
 export const UserName = styled.span`
-	color: ${COLORS.gray600};
+	color: ${({ theme }) => theme.colors.gray600};
 	font-size: 1.4rem;
 	font-weight: 500;
 	margin: 0 0.8rem;
 `;
 
 export const LoginContainer = styled.span`
-	color: ${COLORS.gray300};
+	color: ${({ theme }) => theme.colors.gray300};
 	font-size: 1.4rem;
 	font-weight: 500;
 	margin-right: 0.8rem;
@@ -123,7 +127,7 @@ export const LoginContainer = styled.span`
 
 export const Login = styled.button`
 	background: transparent;
-	color: ${COLORS.primary};
+	color: ${({ theme }) => theme.colors.primary};
 	font-size: 1.4rem;
 	font-weight: 500;
 	text-decoration: underline;
@@ -140,7 +144,8 @@ export const LikeButton = styled.button<{ liked?: string }>`
 	display: flex;
 	align-items: flex-end;
 	background: transparent;
-	color: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
+	color: ${({ theme, liked }) =>
+		liked ? theme.colors.primary : theme.colors.gray300};
 	gap: 0.8rem;
 	transition: filter 0.2s ease-out, opacity 0.2s ease-out;
 	cursor: pointer;
@@ -155,7 +160,8 @@ export const LikeButton = styled.button<{ liked?: string }>`
 	}
 
 	> svg > path {
-		stroke: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
+		stroke: ${({ theme, liked }) =>
+			liked ? theme.colors.primary : theme.colors.gray300};
 	}
 
 	@media (max-width: 400px) {

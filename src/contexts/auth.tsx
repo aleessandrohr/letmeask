@@ -3,14 +3,10 @@ import { toast } from "react-toastify";
 
 import { firebase, auth } from "services/firebase";
 
-interface User {
-	id: string;
-	name: string;
-	avatar: string;
-}
+import { User } from "types/user";
 
 interface IAuthContext {
-	user?: User | null;
+	user?: User;
 	signInWithGoogle: () => Promise<void>;
 	signOut: () => Promise<void>;
 }
@@ -18,7 +14,7 @@ interface IAuthContext {
 export const AuthContext = createContext({} as IAuthContext);
 
 export const AuthProvider: React.FC = ({ children }) => {
-	const [user, setUser] = useState<User | null>();
+	const [user, setUser] = useState<User>();
 
 	useEffect(() => {
 		// eslint-disable-next-line @typescript-eslint/no-shadow
@@ -67,13 +63,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 		const signOutConfirm = confirm("Tem certeza que deseja deslogar?");
 
 		if (signOutConfirm) {
-			try {
-				await auth.signOut();
-
-				toast.success("Deslogado com sucesso!");
-			} catch (error) {
-				toast.error(error.message);
-			}
+			await auth.signOut();
+			toast.success("Deslogado com sucesso!");
 		}
 	};
 

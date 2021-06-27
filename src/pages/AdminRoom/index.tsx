@@ -9,15 +9,13 @@ import { RoomCode } from "components/RoomCode";
 import { useAuth } from "hooks/useAuth";
 import { useRoom } from "hooks/useRoom";
 
-import { Logo } from "assets/images/svgs";
-
 import { database } from "services/firebase";
 
 import {
 	Container,
 	Description,
 	Content,
-	Img,
+	LogoIcon,
 	Row,
 	CloseRoom,
 	Main,
@@ -43,17 +41,17 @@ export const AdminRoom: React.FC = () => {
 	const { user } = useAuth();
 	const history = useHistory();
 	const { id: roomId } = useParams<Params>();
-	const { roomExists, authorId, title, endedAt, questions } = useRoom(roomId);
+	const { roomExists, authorId, endedAt, title, questions } = useRoom(roomId);
 
 	useEffect(() => {
 		if (user === null) {
 			toast.info("Usuário não autenticado!");
-			history.push("/");
+			history.push(`/rooms/${roomId}`);
 		} else if (authorId && user?.id !== authorId) {
 			toast.info("Permissão negada!");
-			history.push("/");
+			history.push(`/rooms/${roomId}`);
 		}
-	}, [history, user, authorId]);
+	}, [history, user, authorId, roomId]);
 
 	const handleEndRoom = async () => {
 		const confirmEndRoom = confirm("Tem certeza que deseja fechar a sala?");
@@ -120,8 +118,8 @@ export const AdminRoom: React.FC = () => {
 		<Container>
 			<Description>
 				<Content>
-					<Link to="/">
-						<Img src={Logo} alt="Letmeask" />
+					<Link to="/" aria-label="Letmeask">
+						<LogoIcon />
 					</Link>
 					<Row>
 						<RoomCode code={roomId} />
@@ -165,7 +163,7 @@ export const AdminRoom: React.FC = () => {
 										disabled={isAnswered}
 									>
 										{likeCount > 0 && <LikeCounter>{likeCount}</LikeCounter>}
-										<LikeIcon />
+										<LikeIcon liked={likeId} />
 									</LikeButton>
 								</QuestionButtonContainer>
 								<QuestionButtonContainer>

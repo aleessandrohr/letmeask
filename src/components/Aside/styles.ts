@@ -1,15 +1,13 @@
 import styled from "styled-components";
 
-import { COLORS } from "assets/colors";
-
 export const Container = styled.aside`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	flex: 7;
 	height: 100%;
-	background: ${COLORS.primary};
-	color: ${COLORS.white1000};
+	background: ${({ theme }) => theme.colors.primary};
+	color: ${({ theme }) => theme.colors.white1000};
 	padding: 12rem 8rem;
 
 	@media (max-width: 682px) {
@@ -32,5 +30,5 @@ export const Text = styled.p`
 	font-size: 2.4rem;
 	line-height: 3.2rem;
 	margin-top: 1.6rem;
-	color: ${COLORS.white900};
+	color: ${({ theme }) => theme.colors.white900};
 `;

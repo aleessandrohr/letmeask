@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { Button } from "components/Button";
@@ -10,15 +11,13 @@ import { RoomCode } from "components/RoomCode";
 import { useAuth } from "hooks/useAuth";
 import { useRoom } from "hooks/useRoom";
 
-import { Logo } from "assets/images/svgs";
-
 import { database } from "services/firebase";
 
 import {
 	Container,
 	Description,
 	Content,
-	Img,
+	LogoIcon,
 	Main,
 	TitleContainer,
 	Title,
@@ -49,12 +48,24 @@ interface Data {
 export const Room: React.FC = () => {
 	const { user, signInWithGoogle } = useAuth();
 	const { id: roomId } = useParams<Params>();
-	const { register, reset, handleSubmit } = useForm<Data>({
+	const history = useHistory();
+	const { roomExists, authorId, endedAt, title, questions } = useRoom(roomId);
+	const {
+		register,
+		reset,
+		handleSubmit,
+		formState: { isSubmitting },
+	} = useForm<Data>({
 		defaultValues: {
 			newQuestion: "",
 		},
 	});
-	const { roomExists, title, endedAt, questions } = useRoom(roomId);
+
+	useEffect(() => {
+		if (authorId && user?.id === authorId) {
+			history.push(`/admin/rooms/${roomId}`);
+		}
+	}, [authorId, history, roomId, user?.id]);
 
 	const handleSendQuestion = handleSubmit(async ({ newQuestion }) => {
 		if (!user) {
@@ -73,29 +84,34 @@ export const Room: React.FC = () => {
 			isAnswered: false,
 		};
 
-		try {
-			await database.ref(`rooms/${roomId}/questions`).push(question);
+		await database.ref(`rooms/${roomId}/questions`).push(question);
 
-			reset();
-			toast.success("Pergunta enviada!");
-		} catch (error) {
-			toast.error(error.message);
-		}
+		reset();
+		toast.success("Pergunta enviada!");
 	});
 
 	const handleLikeQuestion = async (questionId: string, likeId?: string) => {
-		if (likeId) {
-			await database
-				.ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`)
-				.remove();
+		if (user) {
+			if (likeId) {
+				await database
+					.ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`)
+					.remove();
+			} else {
+				await database
+					.ref(`rooms/${roomId}/questions/${questionId}/likes`)
+					.push({ authorId: user.id });
+			}
 		} else {
-			await database
-				.ref(`rooms/${roomId}/questions/${questionId}/likes`)
-				.push({ authorId: user?.id });
+			toast.info("Você deve está logado!");
 		}
 	};
 
-	if (roomExists === undefined || endedAt === undefined) {
+	if (
+		user === undefined ||
+		roomExists === undefined ||
+		endedAt === undefined ||
+		!authorId
+	) {
 		return <PageLoading />;
 	}
 
@@ -103,8 +119,8 @@ export const Room: React.FC = () => {
 		<Container>
 			<Description>
 				<Content>
-					<Link to="/">
-						<Img src={Logo} alt="Letmeask" />
+					<Link to="/" aria-label="Letmeask">
+						<LogoIcon />
 					</Link>
 					<RoomCode code={roomId} />
 				</Content>
@@ -119,7 +135,7 @@ export const Room: React.FC = () => {
 				<Form onSubmit={handleSendQuestion}>
 					<Textarea
 						placeholder="O que você quer perguntar?"
-						disabled={!user}
+						disabled={isSubmitting}
 						{...register("newQuestion", {
 							required: true,
 							setValueAs: value => value.trim(),
@@ -138,7 +154,7 @@ export const Room: React.FC = () => {
 								<Login onClick={signInWithGoogle}>faça seu login</Login>
 							</LoginContainer>
 						)}
-						<Button type="submit" disabled={!user}>
+						<Button type="submit" disabled={!user || isSubmitting}>
 							Enviar pergunta
 						</Button>
 					</Footer>

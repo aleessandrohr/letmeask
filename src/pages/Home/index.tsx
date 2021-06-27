@@ -6,8 +6,6 @@ import { Aside } from "components/Aside";
 
 import { useAuth } from "hooks/useAuth";
 
-import { Logo, Google } from "assets/images/svgs";
-
 import { database } from "services/firebase";
 
 import {
@@ -73,9 +71,9 @@ export const Home: React.FC = () => {
 			<Aside />
 			<ContentContainer>
 				<Content>
-					<LogoIcon src={Logo} alt="Letmeask" />
+					<LogoIcon />
 					<CreateRoom onClick={handleCreateRoom} disabled={user === undefined}>
-						<GoogleIcon src={Google} alt="Logo do Google" />
+						<GoogleIcon />
 						Crie sua sala com o Google
 					</CreateRoom>
 					<RoomEnter>ou entre em uma sala</RoomEnter>

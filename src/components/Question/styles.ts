@@ -1,24 +1,24 @@
 import styled from "styled-components";
 
-import { COLORS } from "assets/colors";
-
 export const Container = styled.li<{
 	isAnswered?: boolean;
 	isHighlighted?: boolean;
 }>`
-	background: ${({ isHighlighted, isAnswered }) => {
+	background: ${({ theme, isHighlighted, isAnswered }) => {
 		if (isHighlighted) {
-			return COLORS.white800;
+			return theme.colors.secondary800;
 		} else if (isAnswered) {
-			return COLORS.gray100;
+			return theme.colors.gray100;
 		}
 
-		return COLORS.white950;
+		return theme.colors.secondary950;
 	}};
 	border-radius: 8px;
-	border: ${({ isHighlighted }) =>
-		isHighlighted ? `1px solid ${COLORS.primary}` : "1px solid transparent"};
-	box-shadow: 0 2px 12px ${COLORS.black1000}d6;
+	border: ${({ theme, isHighlighted }) =>
+		isHighlighted
+			? `1px solid ${theme.colors.primary}`
+			: "1px solid transparent"};
+	box-shadow: 0 2px 12px ${({ theme }) => theme.colors.black1000}d6;
 	padding: 2.4rem;
 	transition: background-color 0.2s ease-out, border 0.2s ease-out;
 
@@ -28,7 +28,7 @@ export const Container = styled.li<{
 `;
 
 export const Content = styled.p`
-	color: ${COLORS.gray600};
+	color: ${({ theme }) => theme.colors.gray600};
 `;
 
 export const Footer = styled.footer`
@@ -58,8 +58,8 @@ export const UserName = styled.span<{
 	isAnswered?: boolean;
 	isHighlighted?: boolean;
 }>`
-	color: ${({ isHighlighted, isAnswered }) =>
-		isHighlighted || isAnswered ? COLORS.gray600 : COLORS.gray300};
+	color: ${({ theme, isHighlighted, isAnswered }) =>
+		isHighlighted || isAnswered ? theme.colors.gray600 : theme.colors.gray300};
 	font-size: 1.4rem;
 	margin-left: 0.8rem;
 `;

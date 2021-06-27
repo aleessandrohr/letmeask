@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Button } from "components/Button";
 import { Input } from "components/Input";
 
-import { COLORS } from "assets/colors";
+import { LogoComponent } from "assets/images/svgs";
 
 export const Container = styled.div`
 	display: flex;
@@ -38,8 +38,12 @@ export const Content = styled.div`
 	text-align: center;
 `;
 
-export const LogoIcon = styled.img`
+export const LogoIcon = styled(LogoComponent)`
 	align-self: center;
+
+	> path:nth-child(n + 1):nth-child(-n + 5) {
+		fill: ${({ theme }) => theme.colors.gray600};
+	}
 `;
 
 export const CreateRoom = styled.h1`
@@ -59,10 +63,10 @@ export const Submit = styled(Button)`
 
 export const RoomEnter = styled.p`
 	font-size: 1.4rem;
-	color: ${COLORS.gray300};
+	color: ${({ theme }) => theme.colors.gray300};
 	margin-top: 1.6rem;
 `;
 
 export const Link = styled(ReactLink)`
-	color: ${COLORS.pink500};
+	color: ${({ theme }) => theme.colors.pink500};
 `;

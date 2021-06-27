@@ -3,13 +3,13 @@ import styled, { css } from "styled-components";
 import { Button } from "components/Button";
 import { Input } from "components/Input";
 
-import { COLORS } from "assets/colors";
+import { LogoComponent, GoogleComponent } from "assets/images/svgs";
 
 const LineCSS = css`
 	content: "";
 	flex: 1;
 	height: 1px;
-	background: ${COLORS.gray200};
+	background: ${({ theme }) => theme.colors.gray200};
 `;
 
 export const Container = styled.div`
@@ -42,24 +42,28 @@ export const Content = styled.div`
 	text-align: center;
 `;
 
-export const LogoIcon = styled.img`
+export const LogoIcon = styled(LogoComponent)`
 	align-self: center;
+
+	> path:nth-child(n + 1):nth-child(-n + 5) {
+		fill: ${({ theme }) => theme.colors.gray600};
+	}
 `;
 
 export const CreateRoom = styled(Button)`
 	min-height: 5rem;
-	background: ${COLORS.red500};
+	background: ${({ theme }) => theme.colors.red500};
 	margin-top: 6.4rem;
 `;
 
-export const GoogleIcon = styled.img`
+export const GoogleIcon = styled(GoogleComponent)`
 	margin-right: 0.8rem;
 `;
 
 export const RoomEnter = styled.div`
 	display: flex;
 	align-items: center;
-	color: ${COLORS.gray200};
+	color: ${({ theme }) => theme.colors.gray200};
 	font-size: 1.4rem;
 	margin: 3.2rem 0;
 

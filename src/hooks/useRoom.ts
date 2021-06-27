@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { database } from "services/firebase";
 
 import { useAuth } from "./useAuth";
+import { useConnected } from "./useConnected";
 
 type Questions = Record<
 	string,
@@ -48,10 +49,11 @@ interface IQuestion {
 export const useRoom = (roomId: string) => {
 	const history = useHistory();
 	const { user } = useAuth();
+	const { connected } = useConnected();
 	const [roomExists, setRoomExists] = useState<boolean | undefined>();
 	const [authorId, setAuthorId] = useState<string>("");
-	const [title, setTitle] = useState("");
 	const [endedAt, sedEndedAt] = useState<boolean | string | undefined>();
+	const [title, setTitle] = useState("");
 	const [questions, setQuestions] = useState<Array<IQuestion>>([]);
 
 	const roomRef = useMemo(() => {
@@ -60,15 +62,11 @@ export const useRoom = (roomId: string) => {
 
 	useEffect(() => {
 		const checkIfRoomExists = async () => {
-			if ((await roomRef.get()).exists()) {
-				setRoomExists(true);
-			} else {
-				setRoomExists(false);
-			}
+			setRoomExists((await roomRef.get()).exists());
 		};
 
-		checkIfRoomExists();
-	}, [roomRef]);
+		if (connected) checkIfRoomExists();
+	}, [connected, roomRef]);
 
 	useEffect(() => {
 		if (roomExists) {
@@ -93,8 +91,8 @@ export const useRoom = (roomId: string) => {
 				);
 
 				setAuthorId(databaseRoom.authorId);
-				setTitle(databaseRoom.title);
 				sedEndedAt(databaseRoom.endedAt || false);
+				setTitle(databaseRoom.title);
 				setQuestions(parsedQuestions);
 			});
 		} else if (roomExists === false) {
@@ -114,5 +112,5 @@ export const useRoom = (roomId: string) => {
 		}
 	}, [endedAt, history]);
 
-	return { roomExists, authorId, title, endedAt, questions };
+	return { roomExists, authorId, endedAt, title, questions };
 };
