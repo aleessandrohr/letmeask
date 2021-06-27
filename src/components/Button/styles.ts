@@ -1,20 +1,18 @@
 import styled from "styled-components";
 
-import { COLORS } from "assets/colors";
-
 export const Container = styled.button<{ isOutlined?: boolean }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 5rem;
-	background: ${({ isOutlined }) =>
-		isOutlined ? COLORS.white1000 : COLORS.primary};
-	color: ${({ isOutlined }) =>
-		isOutlined ? COLORS.primary : COLORS.white1000};
+	background: ${({ theme, isOutlined }) =>
+		isOutlined ? theme.colors.secondary1000 : theme.colors.primary};
+	color: ${({ theme, isOutlined }) =>
+		isOutlined ? theme.colors.primary : theme.colors.white1000};
 	font-weight: 500;
 	border-radius: 8px;
-	border: ${({ isOutlined }) =>
-		isOutlined ? `1px solid ${COLORS.primary}` : "unset"};
+	border: ${({ theme, isOutlined }) =>
+		isOutlined && `1px solid ${theme.colors.primary}`};
 	padding: 0 3.2rem;
 	transition: filter 0.2s ease-out;
 	cursor: pointer;

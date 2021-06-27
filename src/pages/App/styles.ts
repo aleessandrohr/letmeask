@@ -1,7 +1,5 @@
 import { createGlobalStyle } from "styled-components";
 
-import { COLORS } from "assets/colors";
-
 export const GlobalStyle = createGlobalStyle`
 	 * {
     margin: 0;
@@ -10,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
 
 		&:focus-visible {
 			outline: 2px solid transparent;
-		 	box-shadow: 0 0 0 2px ${COLORS.gray600};
+		 	box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.gray600};
 		}
   }
 
@@ -24,14 +22,14 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: ${COLORS.background};
-    color: ${COLORS.gray600};
+    background: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.gray600};
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-size: 1.6rem;
   }
 
 	a {
-		color: ${COLORS.gray600};
+    color: ${({ theme }) => theme.colors.gray600};
 		text-decoration: none;
 	}
 
@@ -50,12 +48,12 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	::-webkit-scrollbar-track {
-		background: ${COLORS.gray50};
+		background: ${({ theme }) => theme.colors.gray50};
 		border-radius: 4px;
 	}
 
 	::-webkit-scrollbar-thumb {
-		background: ${COLORS.primary};
+		background: ${({ theme }) => theme.colors.primary};
 		border-radius: 4px;
 	}
 

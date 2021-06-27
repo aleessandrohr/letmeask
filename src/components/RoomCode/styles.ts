@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
-import { COLORS } from "assets/colors";
-
 export const Container = styled.button`
 	display: flex;
 	height: 4rem;
-	background: ${COLORS.white1000};
+	background: ${({ theme }) => theme.colors.secondary1000};
+	color: ${({ theme }) => theme.colors.gray600};
 	border-radius: 8px;
-	border: 1px solid ${COLORS.primary};
+	border: ${({ theme }) => `1px solid ${theme.colors.primary}`};
 	overflow: hidden;
 	cursor: pointer;
 	word-break: break-all;
@@ -18,7 +17,7 @@ export const ImgContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	height: 100%;
-	background: ${COLORS.primary};
+	background: ${({ theme }) => theme.colors.primary};
 	padding: 0 1.2rem;
 `;
 

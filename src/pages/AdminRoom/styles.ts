@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 import { Button } from "components/Button";
 
-import { COLORS } from "assets/colors";
 import {
+	LogoComponent,
 	LikeComponent,
 	CheckComponent,
 	AnswerComponent,
@@ -30,9 +30,9 @@ export const Container = styled.div``;
 export const Description = styled.header`
 	position: sticky;
 	top: 0;
-	background: ${COLORS.background};
-	border-bottom: 1px solid ${COLORS.gray50};
-	box-shadow: 0 1px 3px ${COLORS.black1000}50;
+	background: ${({ theme }) => theme.colors.background};
+	border-bottom: 1px solid ${({ theme }) => theme.colors.gray50};
+	box-shadow: 0 1px 3px ${({ theme }) => theme.colors.black1000}50;
 	padding: 2.4rem;
 	z-index: 30;
 `;
@@ -49,8 +49,12 @@ export const Content = styled.div`
 	}
 `;
 
-export const Img = styled.img`
+export const LogoIcon = styled(LogoComponent)`
 	max-height: 4.5rem;
+
+	> path:nth-child(n + 1):nth-child(-n + 5) {
+		fill: ${({ theme }) => theme.colors.gray600};
+	}
 `;
 
 export const Row = styled.div`
@@ -86,12 +90,12 @@ export const TitleContainer = styled.div`
 export const Title = styled.h1`
 	font-family: "Poppins", sans-serif;
 	font-size: 2.4rem;
-	color: ${COLORS.gray600};
+	color: ${({ theme }) => theme.colors.gray600};
 `;
 
 export const QuestionCounter = styled.span`
-	background: ${COLORS.pink500};
-	color: ${COLORS.white1000};
+	background: ${({ theme }) => theme.colors.pink500};
+	color: ${({ theme }) => theme.colors.white1000};
 	font-size: 1.4rem;
 	font-weight: 500;
 	border-radius: 50px;
@@ -108,12 +112,9 @@ export const QuestionButtonContainer = styled.div``;
 export const LikeButton = styled(ButtonBase)<{ liked?: string }>`
 	display: flex;
 	align-items: flex-end;
-	color: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
+	color: ${({ theme, liked }) =>
+		liked ? theme.colors.primary : theme.colors.gray300};
 	gap: 0.8rem;
-
-	> svg > path {
-		stroke: ${({ liked }) => (liked ? COLORS.primary : COLORS.gray300)};
-	}
 
 	@media (max-width: 400px) {
 		flex-direction: column-reverse;
@@ -122,8 +123,13 @@ export const LikeButton = styled(ButtonBase)<{ liked?: string }>`
 `;
 export const LikeCounter = styled.span``;
 
-export const LikeIcon = styled(LikeComponent)`
+export const LikeIcon = styled(LikeComponent)<{ liked?: string }>`
 	align-self: center;
+
+	> path {
+		stroke: ${({ theme, liked }) =>
+			liked ? theme.colors.primary : theme.colors.gray300};
+	}
 `;
 
 export const QuestionButton = styled(ButtonBase)``;

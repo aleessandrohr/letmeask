@@ -8,8 +8,6 @@ import { PageLoading } from "components/PageLoading";
 
 import { useAuth } from "hooks/useAuth";
 
-import { Logo } from "assets/images/svgs";
-
 import { database } from "services/firebase";
 
 import {
@@ -64,7 +62,7 @@ export const NewRoom: React.FC = () => {
 			<Aside />
 			<ContentContainer>
 				<Content>
-					<LogoIcon src={Logo} alt="Letmeask" />
+					<LogoIcon />
 					<CreateRoom>Criar uma nova sala</CreateRoom>
 					<Form onSubmit={handleCreateRoom}>
 						<RoomName
