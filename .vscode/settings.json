@@ -29,7 +29,7 @@
 	// TypeScript
 	"typescript.suggest.autoImports": true,
 	"typescript.updateImportsOnFileMove.enabled": "always",
-	"typescript.tsserver.log": "verbose",
+	"typescript.tsserver.log": "off",
 	"[typescript]": {
 		"editor.defaultFormatter": null
 	},
@@ -73,6 +73,9 @@
 	],
 
 	// Material Icon Theme
+	"material-icon-theme.files.associations": {
+		"tsconfig.json": "tune"
+	},
 	"material-icon-theme.folders.associations": {
 		"types": "typescript",
 		"enums": "typescript",
