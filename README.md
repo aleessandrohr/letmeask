@@ -5,7 +5,7 @@
 <br>
 
 <h1 align="center">
-	<img alt="Letmeask" src="./src/assets/images/pngs/cover.png" style="border-radius: 8px;" />
+	<img alt="Letmeask" src="./src/assets/images/pngs/cover.png" />
 </h1>
 
 # Acesso
