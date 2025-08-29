@@ -10,7 +10,7 @@
 
 # Acesso
 
-Acesse a página da aplicação clicando [aqui](https://letmeask-eight.vercel.app).
+Acesse a página da aplicação clicando [aqui](https://letmeask.aleessandrohr.dev.br).
 
 ## 🧪 Tecnologias
 
